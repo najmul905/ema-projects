@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { addToDb, getShoppingCart } from '../../utilities/fakedb';
 import Cart from '../Cart/Cart';
 import Product from '../Products/Product';
 import './Shop.css'
@@ -10,6 +11,9 @@ const Shop = () => {
         .then(res=>res.json())
         .then(data=>setProducts(data))
     },[])
+    useEffect(()=>{
+        const shoppingCart=getShoppingCart()
+    },[])
 
     // button handel usState
     const [cart, setCart]=useState([]);
@@ -18,7 +22,7 @@ const Shop = () => {
     const handelAddToCart=(product)=>{
        const newCart=[...cart,product]
        setCart(newCart)
-
+       addToDb(product.id)
     }
 
     return (
